@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class StudentRepoTest {
@@ -85,5 +84,28 @@ class StudentRepoTest {
     public void getStudentFirstNameByEmailId(){
         String firstName = studentRepo.getStudentFirstNameByEmailId("atekur.rm@gmail.com");
         System.out.println("firstName = " + firstName);
+    }
+    
+    @Test
+    public void getStudentByEmailAddressNative(){
+        Student student = studentRepo.getStudentByEmailAddressNative("nirob@gmail.com");
+        System.out.println("student = " + student);
+    }
+    
+    @Test
+    public void getAllStudent(){
+        List<Student> studentList = studentRepo.getAllStudent();
+        System.out.println("studentList = " + studentList);
+    }
+    
+    @Test
+    public void getStudentByEmailAddressNativeNamedParam(){
+        Student student = studentRepo.getStudentByEmailAddressNativeNamedParam("nirob@gmail.com");
+        System.out.println("student = " + student);
+    }
+    
+    @Test
+    public void updateFirstNameByEmailId(){
+        studentRepo.updateFirstNameByEmailId("Nirob", "nirob@gmail.com");
     }
 }
