@@ -2,11 +2,12 @@ package com.practice.spring.data.jpa.repository;
 
 import com.practice.spring.data.jpa.entity.Course;
 import com.practice.spring.data.jpa.entity.CourseMaterial;
+import lombok.ToString;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.List;
 
 @SpringBootTest
 class CourseMaterialRepoTest {
@@ -24,5 +25,11 @@ class CourseMaterialRepoTest {
                 .course(course)
                 .build();
         courseMaterialRepo.save(courseMaterial);
+    }
+
+    @Test
+    public void getAllCourseMaterials(){
+        List<CourseMaterial> courseMaterials = courseMaterialRepo.findAll();
+        System.out.println("courseMaterials = " + courseMaterials);
     }
 }
