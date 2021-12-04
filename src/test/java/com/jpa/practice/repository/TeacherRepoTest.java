@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -14,6 +16,8 @@ class TeacherRepoTest {
 
     @Autowired
     private TeacherRepo teacherRepo;
+    @Autowired
+    private CourseRepo courseRepo;
 
     @Test
     public void saveTeacher(){
@@ -45,5 +49,35 @@ class TeacherRepoTest {
 //        assertEquals(teacher.getCourses().get(0).getTitle(),"Java programming");
 //        assertEquals(teacher.getCourses().get(1).getTitle(),"C++ programming");
     }
+
+    @Test
+    public void saveTeacherWithCourse(){
+        Course course = Course.builder().title("Spring data jpa").build();
+        Teacher teacher = Teacher.builder().firstName("Amir").lastName("Hossen").build();
+
+        course.setTeacher(teacher);
+        teacher.setCourses(Arrays.asList(course));
+
+        teacherRepo.save(teacher);
+    }
+
+    @Test
+    @Transactional
+    public void saveExistringTeacherAndCourse(){
+        Course savedCourse = courseRepo.getById(16L);
+        Teacher savedTeacher = savedCourse.getTeacher();
+
+        savedTeacher.setLastName("Hassan");
+        savedCourse.setTitle("Spring boot");
+
+        teacherRepo.save(savedTeacher);
+        teacherRepo.flush();
+    }
+
+    @Test
+    public void removeTeacher(){
+        teacherRepo.deleteById(4L);
+    }
+
 
 }
